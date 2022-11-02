@@ -85,6 +85,16 @@ class App extends Component {
     if (someTrunfo) this.setState({ hasTrunfo: true });
   };
 
+  handleDeleteCard = (event) => {
+    const { cardList } = this.state;
+    const cardIndex = cardList.findIndex((card) => card.cardName === event.target.name);
+    const removedCard = cardList.splice(cardIndex, 1);
+    if (removedCard[0].cardTrunfo) {
+      this.setState({ hasTrunfo: false });
+    }
+    this.setState({ cardList });
+  };
+
   onSaveButtonClick = () => {
     const {
       cardName,
@@ -159,18 +169,27 @@ class App extends Component {
         />
         <section>
           {cardList.map((card) => (
-            <Card
-              key={ card.cardName }
-              cardName={ card.cardName }
-              cardDescription={ card.cardDescription }
-              cardAttr1={ card.cardAttr1 }
-              cardAttr2={ card.cardAttr2 }
-              cardAttr3={ card.cardAttr3 }
-              cardImage={ card.cardImage }
-              cardRare={ card.cardRare }
-              cardTrunfo={ card.cardTrunfo }
-              hasTrunfo={ card.hasTrunfo }
-            />
+            <div key={ card.cardName }>
+              <Card
+                cardName={ card.cardName }
+                cardDescription={ card.cardDescription }
+                cardAttr1={ card.cardAttr1 }
+                cardAttr2={ card.cardAttr2 }
+                cardAttr3={ card.cardAttr3 }
+                cardImage={ card.cardImage }
+                cardRare={ card.cardRare }
+                cardTrunfo={ card.cardTrunfo }
+                hasTrunfo={ card.hasTrunfo }
+              />
+              <button
+                type="button"
+                name={ card.cardName }
+                data-testid="delete-button"
+                onClick={ this.handleDeleteCard }
+              >
+                Excluir
+              </button>
+            </div>
           ))}
         </section>
       </div>
