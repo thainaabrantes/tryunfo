@@ -79,6 +79,12 @@ class App extends Component {
     });
   };
 
+  validateSuperTrunfo = () => {
+    const { cardList } = this.state;
+    const someTrunfo = cardList.some((card) => card.cardTrunfo === true);
+    if (someTrunfo) this.setState({ hasTrunfo: true });
+  };
+
   onSaveButtonClick = () => {
     const {
       cardName,
@@ -104,7 +110,7 @@ class App extends Component {
           cardTrunfo,
         }],
       }
-    ));
+    ), this.validateSuperTrunfo);
     this.clearForm();
   };
 
